@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "django-generic-backend"
+version = "0.1.0"
+description = "Modelo genérico de backend com django, para criar aplicações desacopladas, envolvendo tecnologias que gosto de usar"
+authors = ["Ronald Seabra <git.ronaldseabra@gmail.com>"]
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.6"
+pydantic = "^2.4.2"
+djangorestframework = "^3.14.0"
+django-cors-headers = "^4.2.0"
+python-decouple = "^3.8"
+psycopg2 = "^2.9.9"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+ruff = "^0.0.292"
+pytest-django = "^4.5.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length=110
+target-version = ['py38', 'py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+)/
+'''
+force-double-quote = true
+
+
+[tool.ruff]
+line-length = 110
+extend-exclude = ["migrations"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "project.settings"
+
+[tool.pytest.plugins]
+django_find_project = true
