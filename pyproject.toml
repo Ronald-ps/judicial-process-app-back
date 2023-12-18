@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "django-generic-backend"
+name = "plural-back"
 version = "0.1.0"
 description = "Modelo genérico de backend com django, para criar aplicações desacopladas, envolvendo tecnologias que gosto de usar"
 authors = ["Ronald Seabra <git.ronaldseabra@gmail.com>"]
@@ -14,6 +14,7 @@ djangorestframework = "^3.14.0"
 django-cors-headers = "^4.2.0"
 python-decouple = "^3.8"
 psycopg2 = "^2.9.9"
+djangorestframework-simplejwt = "^5.3.1"
 
 
 [tool.poetry.group.dev.dependencies]
