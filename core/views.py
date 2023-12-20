@@ -1,12 +1,10 @@
 from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-
-def hello_world(request):
-    return JsonResponse({"message": "Hello, world!"})
-
-
 @api_view(["GET"])
-def hello_word_django_rest():
-    return Response({"message": "Hello, world!"})
+@permission_classes([IsAuthenticated])
+def whoami(request):
+    serialized_user = { "id": request.user.id, "email": request.user.email , "name": request.user.get_full_name() }
+    return Response(serialized_user)
