@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from core.filters import ClientFilter
 from core.models import Client
 
 from core.serializers import ClientBaseSerializer
@@ -17,6 +18,12 @@ def whoami(request):
 class ClientViewSets(viewsets.ModelViewSet):
     queryset = Client.objects.all().order_by("-created_at")
     serializer_class = ClientBaseSerializer
+    filter_class = ClientFilter
+
+
+
+
+
 
 
 

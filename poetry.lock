@@ -193,6 +193,24 @@ files = [
 ]
 
 [[package]]
+name = "model-bakery"
+version = "1.17.0"
+description = "Smart object creation facility for Django."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "model_bakery-1.17.0-py3-none-any.whl", hash = "sha256:1d26f1a7043c46e6729145b964a7740bf8f6dddac16510fd18323a1492fba757"},
+    {file = "model_bakery-1.17.0.tar.gz", hash = "sha256:fe808132cd966164600f0450cc05b3cfa50c6c062e00f739a861c5a4b9f236ca"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+
+[package.extras]
+docs = ["sphinx", "sphinx-rtd-theme"]
+test = ["black", "coverage", "mypy", "pillow", "pytest", "pytest-django", "ruff"]
+
+[[package]]
 name = "mypy-extensions"
 version = "1.0.0"
 description = "Type system extensions for programs checked with the mypy type checker."
@@ -556,4 +574,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "52cabef80c24ab9e996d7d530733665373728a5825810852773bf36a3b30ba4b"
+content-hash = "abc5dbcad5749e2cdacb5da81c729aad826c76a154ee3949478d25856d5cbfa7"
