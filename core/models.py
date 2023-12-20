@@ -71,11 +71,12 @@ class Client(models.Model):
     marital_status = models.TextField(choices=MaritalStatusChoices.choices)
     address = models.TextField()
     city = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Process(models.Model):
     """ Processo que o cliente solicita """
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="processes")
     code = models.TextField()
     start_date = models.DateField()
     description = models.TextField()
