@@ -23,6 +23,7 @@ black = "^23.9.1"
 ruff = "^0.0.292"
 pytest-django = "^4.5.2"
 model-bakery = "^1.17.0"
+faker = "^21.0.0"
 
 [build-system]
 requires = ["poetry-core"]
