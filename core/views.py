@@ -3,9 +3,14 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from core.filters import ClientFilter
-from core.models import Client, Process
+from core.models import Client, Evolution, Observation, Process
 
-from core.serializers import ClientBaseSerializer, LegalProcessSerializer
+from core.serializers import (
+    ClientBaseSerializer,
+    EvolutionSerializer,
+    LegalProcessSerializer,
+    ObservationSerializer,
+)
 
 
 @api_view(["GET"])
@@ -38,3 +43,15 @@ def legal_processes(request, client_id):
 def simple_legal_processes(request, client_id):
     processes = Process.objects.filter(client_id=client_id).values("id", "code")
     return Response(processes)
+
+
+class EvolutionViewSets(viewsets.ModelViewSet):
+    queryset = Evolution.objects.filter().order_by("-created_at")
+    serializer_class = EvolutionSerializer
+    filterset_fields = ["process", "id"]
+
+
+class ObservationViewSets(viewsets.ModelViewSet):
+    queryset = Observation.objects.filter().order_by("-created_at")
+    serializer_class = ObservationSerializer
+    filterset_fields = ["process", "id"]

@@ -4,6 +4,8 @@ from rest_framework.routers import SimpleRouter
 
 router = SimpleRouter()
 router.register(r"client", views.ClientViewSets)
+router.register(r"evolution", views.EvolutionViewSets)
+router.register(r"observation", views.ObservationViewSets)
 
 urlpatterns = [
     path("whoami", views.whoami, name="whoami"),

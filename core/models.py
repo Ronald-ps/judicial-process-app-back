@@ -112,3 +112,15 @@ class Evolution(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Honorary(models.Model):
+    """Honorários de um processo"""
+
+    date = models.DateField()
+    process = models.ForeignKey(Process, on_delete=models.CASCADE, related_name="honoraries")
+    description = models.TextField()
+    value = models.DecimalField(max_digits=10, decimal_places=2)
+    paid_value = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
