@@ -6,6 +6,7 @@ class ClientBaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = "__all__"
+        ready_only_fields = ["created_at", "profile_image"]
 
 
 class ObservationSerializer(serializers.ModelSerializer):

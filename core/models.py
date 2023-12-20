@@ -56,6 +56,7 @@ class Client(models.Model):
         DIVORCIADO = "divorciado", "Divorciado"
         VIUVO = "viuvo", "Viúvo"
 
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
     first_name = models.TextField()
     last_name = models.TextField()
     cpf = models.CharField(max_length=14)
