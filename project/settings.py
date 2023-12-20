@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "core",
 ]
+if DEBUG:
+    INSTALLED_APPS += ["dev_app"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
