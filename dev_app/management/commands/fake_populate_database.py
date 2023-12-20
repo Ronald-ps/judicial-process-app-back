@@ -15,6 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write("Populando banco de dados...")
 
+        self.stdout.write("Populando clients...")
         clients = []
         for _ in range(20):
             client = make(
@@ -32,6 +33,7 @@ class Command(BaseCommand):
                 childrens_quantity=generate_random_number(end=5),
                 education_level=Client.EducationLevelChoices.FUNDAMENTAL.value,
                 marital_status=Client.MaritalStatusChoices.CASADO.value,
+                profession=fake.job().lower(),
                 address=fake.address(),
                 city=fake.city(),
             )
