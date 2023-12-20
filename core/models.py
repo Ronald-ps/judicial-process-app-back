@@ -40,3 +40,58 @@ class User(AbstractUser):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
+
+class Client(models.Model):
+    """ Cliente que solicita por processos """
+    class EducationLevelChoices(models.TextChoices):
+        FUNDAMENTAL = "fundamental", "Ensino fundamental"
+        MEDIO = "medio", "Ensino médio"
+        SUPERIOR = "superior", "Ensino superior"
+
+    class MaritalStatusChoices(models.TextChoices):
+        SOLTEIRO = "solteiro", "Solteiro"
+        CASADO = "casado", "Casado"
+        DIVORCIADO = "divorciado", "Divorciado"
+        VIUVO = "viuvo", "Viúvo"
+
+    first_name = models.TextField()
+    last_name = models.TextField()
+    cpf = models.CharField(max_length=14)
+    rg = models.CharField(max_length=8)
+    birth_date = models.DateField()
+    phone = models.CharField(max_length=12)
+    cellphone = models.CharField(max_length=12)
+    email = models.EmailField()
+    father_name = models.TextField()
+    mother_name = models.TextField()
+    childrens_quantity = models.IntegerField()
+    education_level = models.TextField(choices=EducationLevelChoices.choices)
+    profession = models.TextField()
+    marital_status = models.TextField(choices=MaritalStatusChoices.choices)
+    address = models.TextField()
+    city = models.TextField()
+
+
+class Process(models.Model):
+    """ Processo que o cliente solicita """
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    code = models.TextField()
+    start_date = models.DateField()
+    description = models.TextField()
+
+
+class Observation(models.Model):
+    """ Observação de um processo """
+    process = models.ForeignKey(Process, on_delete=models.CASCADE)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Evolution(models.Model):
+    """ Evolução de um processo """
+    process = models.ForeignKey(Process, on_delete=models.CASCADE)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
