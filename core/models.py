@@ -73,11 +73,33 @@ class Client(models.Model):
     city = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-
+# export const PROCESS_SERVICES = {
+#   REGISTRO_DE_MARCAS: "registro de marcas",
+#   REGISTRO_DE_PATENTES: "registro de patentes",
+#   REGISTRO_DE_DIREITO_AUTORAL: "registro de direito autoral",
+#   REGISTRO_DE_SOFTWARES: "registro de softwares",
+#   REGISTRO_DE_DESENHO_INDUSTRIAL: "registro de desenho industrial",
+#   RECUPERACAO_DE_ATIVOS: "recuperação de ativos",
+#   PERICIA_JUDICIAIS: "pericia judiciais",
+#   PERICIA_EXTRAJUDICIAIS: "pericia extrajudiciais",
+#   TERCEIRIZACAO_PARA_ESCRITORIOS: "terceirização para escritórios",
+# };
 class Process(models.Model):
     """ Processo que o cliente solicita """
+    class TypeChoices(models.TextChoices):
+        REGISTRO_DE_MARCAS = "registro de marcas", "Registro de marcas"
+        REGISTRO_DE_PATENTES = "registro de patentes", "Registro de patentes"
+        REGISTRO_DE_DIREITO_AUTORAL = "registro de direito autoral", "Registro de direito autoral"
+        REGISTRO_DE_SOFTWARES = "registro de softwares", "Registro de softwares"
+        REGISTRO_DE_DESENHO_INDUSTRIAL = "registro de desenho industrial", "Registro de desenho industrial"
+        RECUPERACAO_DE_ATIVOS = "recuperação de ativos", "Recuperação de ativos"
+        PERICIA_JUDICIAIS = "pericia judiciais", "Pericia judiciais"
+        PERICIA_EXTRAJUDICIAIS = "pericia extrajudiciais", "Pericia extrajudiciais"
+        TERCEIRIZACAO_PARA_ESCRITORIOS = "terceirização para escritórios", "Terceirização para escritórios"
+
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="processes")
     code = models.TextField()
+    type = models.TextField(choices=TypeChoices.choices)
     start_date = models.DateField()
     description = models.TextField()
 

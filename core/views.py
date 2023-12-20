@@ -20,6 +20,14 @@ class ClientViewSets(viewsets.ModelViewSet):
     filterset_class = ClientFilter
 
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def legal_processes(request, client_id):
+    client = Client.objects.get(pk=client_id)
+    serialized_processes = [process.to_dict() for process in client.processes.all()]
+    return Response(serialized_processes)
+
+
 
 
 

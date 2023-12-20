@@ -7,5 +7,6 @@ router.register(r'client', views.ClientViewSets)
 
 urlpatterns = [
   path("whoami", views.whoami, name="whoami"),
+  path("client/<int:client_id>/legal-processes", views.legal_processes, name="legal_processes"),
   path("", include(router.urls)),
 ]
