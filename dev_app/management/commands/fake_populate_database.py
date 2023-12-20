@@ -3,7 +3,7 @@ from faker import Faker
 
 from model_bakery.baker import make
 
-from core.models import Client
+from core.models import Client, Process
 from dev_app.utils import generate_fake_date, generate_fake_numbers, generate_random_number
 
 fake = Faker(["pt_BR"])
@@ -38,3 +38,16 @@ class Command(BaseCommand):
                 city=fake.city(),
             )
             clients.append(client)
+
+        self.stdout.write("Populando processos...")
+        processes = []
+        for client in clients:
+            for _ in range(15):
+                process = make(
+                    Process,
+                    client=client,
+                    code=generate_fake_numbers(10),
+                    start_date=generate_fake_date(),
+                    description=fake.text(),
+                )
+                processes.append(process)

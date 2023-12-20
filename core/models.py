@@ -43,7 +43,8 @@ class User(AbstractUser):
 
 
 class Client(models.Model):
-    """ Cliente que solicita por processos """
+    """Cliente que solicita por processos"""
+
     class EducationLevelChoices(models.TextChoices):
         FUNDAMENTAL = "fundamental", "Ensino fundamental"
         MEDIO = "medio", "Ensino médio"
@@ -73,19 +74,10 @@ class Client(models.Model):
     city = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-# export const PROCESS_SERVICES = {
-#   REGISTRO_DE_MARCAS: "registro de marcas",
-#   REGISTRO_DE_PATENTES: "registro de patentes",
-#   REGISTRO_DE_DIREITO_AUTORAL: "registro de direito autoral",
-#   REGISTRO_DE_SOFTWARES: "registro de softwares",
-#   REGISTRO_DE_DESENHO_INDUSTRIAL: "registro de desenho industrial",
-#   RECUPERACAO_DE_ATIVOS: "recuperação de ativos",
-#   PERICIA_JUDICIAIS: "pericia judiciais",
-#   PERICIA_EXTRAJUDICIAIS: "pericia extrajudiciais",
-#   TERCEIRIZACAO_PARA_ESCRITORIOS: "terceirização para escritórios",
-# };
+
 class Process(models.Model):
-    """ Processo que o cliente solicita """
+    """Processo que o cliente solicita"""
+
     class TypeChoices(models.TextChoices):
         REGISTRO_DE_MARCAS = "registro de marcas", "Registro de marcas"
         REGISTRO_DE_PATENTES = "registro de patentes", "Registro de patentes"
@@ -105,16 +97,18 @@ class Process(models.Model):
 
 
 class Observation(models.Model):
-    """ Observação de um processo """
-    process = models.ForeignKey(Process, on_delete=models.CASCADE)
+    """Observação de um processo"""
+
+    process = models.ForeignKey(Process, on_delete=models.CASCADE, related_name="observations")
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Evolution(models.Model):
-    """ Evolução de um processo """
-    process = models.ForeignKey(Process, on_delete=models.CASCADE)
+    """Evolução de um processo"""
+
+    process = models.ForeignKey(Process, on_delete=models.CASCADE, related_name="evolutions")
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)

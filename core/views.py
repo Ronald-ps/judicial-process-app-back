@@ -3,14 +3,19 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from core.filters import ClientFilter
-from core.models import Client
+from core.models import Client, Process
 
-from core.serializers import ClientBaseSerializer
+from core.serializers import ClientBaseSerializer, LegalProcessSerializer
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def whoami(request):
-    serialized_user = { "id": request.user.id, "email": request.user.email , "name": request.user.get_full_name() }
+    serialized_user = {
+        "id": request.user.id,
+        "email": request.user.email,
+        "name": request.user.get_full_name(),
+    }
     return Response(serialized_user)
 
 
@@ -23,18 +28,9 @@ class ClientViewSets(viewsets.ModelViewSet):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def legal_processes(request, client_id):
-    client = Client.objects.get(pk=client_id)
-    serialized_processes = [process.to_dict() for process in client.processes.all()]
+    processes = Process.objects.filter(client_id=client_id)
+    serialized_processes = LegalProcessSerializer(processes, many=True).data
     return Response(serialized_processes)
-
-
-
-
-
-
-
-
-
 
 
 # from django.db import models
