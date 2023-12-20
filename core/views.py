@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -16,9 +15,9 @@ def whoami(request):
 
 
 class ClientViewSets(viewsets.ModelViewSet):
-    queryset = Client.objects.all().order_by("-created_at")
+    queryset = Client.objects.filter().order_by("-created_at")
     serializer_class = ClientBaseSerializer
-    filter_class = ClientFilter
+    filterset_class = ClientFilter
 
 
 
