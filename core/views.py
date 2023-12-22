@@ -9,7 +9,6 @@ from core.filters import ClientFilter
 from core.models import Client, Evolution, Observation, Process
 from rest_framework import status
 from django.core.files.storage import default_storage
-from django.contrib.auth.decorators import login_required
 
 from core.serializers import (
     ClientBaseSerializer,
@@ -63,36 +62,44 @@ class ObservationViewSets(viewsets.ModelViewSet):
     filterset_fields = ["process", "id"]
 
 
-@login_required
+@api_view(["GET", "POST"])
+@permission_classes([IsAuthenticated])
 def profile_image(request, client_id):
     """
-        Atualizar e buscar a imagem de perfil de um cliente
+    Atualizar e buscar a imagem de perfil de um cliente
     """
-    if request.method == 'PUT':
+    if request.method == "POST":
         try:
             client = Client.objects.get(pk=client_id)
         except Client.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse(
+                {"detail": "Validation error, client do not exists"}, status=status.HTTP_404_NOT_FOUND
+            )
 
-        if 'profile_image' not in request.FILES:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        if "profile-image" not in request.FILES:
+            return JsonResponse({"detail": "Validation error"}, status=status.HTTP_400_BAD_REQUEST)
 
-        file = request.FILES['profile_image']
+        file = request.FILES["profile-image"]
         file_name = default_storage.save(file.name, file)
         client.profile_image = file_name
         client.save()
-        return Response(status=status.HTTP_200_OK)
+        return JsonResponse({"detail": "Saved profile image"}, status=status.HTTP_200_OK)
 
-    if request.method == 'GET':
+    if request.method == "GET":
         try:
             client = Client.objects.get(pk=client_id)
         except Client.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse(
+                {"detail": "Validation error, client do not exists"}, status=status.HTTP_404_NOT_FOUND
+            )
 
-        if not (client.profile_image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, client.profile_image.path))):
+        if not (
+            client.profile_image
+            and os.path.isfile(os.path.join(settings.MEDIA_ROOT, client.profile_image.path))
+        ):
             return JsonResponse({"detail": "user do not have profile image"}, status=status.HTTP_200_OK)
 
         file_path = os.path.join(settings.MEDIA_ROOT, client.profile_image.path)
-        return FileResponse(open(file_path, 'rb'), content_type='image/jpeg')
+        return FileResponse(open(file_path, "rb"), content_type="image/*")
 
     return HttpResponse(status=404)
