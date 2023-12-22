@@ -18,5 +18,6 @@ urlpatterns = [
         name="simple_legal_processes",
     ),
     path("client/<int:client_id>/legal-process", views.legal_processes, name="legal_processes"),
+    path("client/<int:client_id>/profile-image/", views.profile_image, name="profile_image"),
     path("", include(router.urls)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
