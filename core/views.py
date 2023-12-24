@@ -5,16 +5,18 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from core.filters import ClientFilter
-from core.models import Client, Evolution, Observation, Process
+from core.filters import ClientFilter, HonoraryFilter
+from core.models import Client, Evolution, Honorary, Observation, Process
 from rest_framework import status
 from django.core.files.storage import default_storage
 
 from core.serializers import (
     ClientBaseSerializer,
     EvolutionSerializer,
+    HonoraryBaseSerializer,
     LegalProcessSerializer,
     ObservationSerializer,
+    ProcessBaseSerializer,
 )
 
 
@@ -51,15 +53,23 @@ def simple_legal_processes(request, client_id):
 
 
 class EvolutionViewSets(viewsets.ModelViewSet):
-    queryset = Evolution.objects.filter().order_by("-created_at")
+    queryset = Evolution.objects.filter().order_by("-created_at").select_related("process")
     serializer_class = EvolutionSerializer
     filterset_fields = ["process", "id"]
 
 
 class ObservationViewSets(viewsets.ModelViewSet):
-    queryset = Observation.objects.filter().order_by("-created_at")
+    queryset = Observation.objects.filter().order_by("-created_at").select_related("process")
     serializer_class = ObservationSerializer
     filterset_fields = ["process", "id"]
+
+
+class ProcessViewSets(viewsets.ModelViewSet):
+    queryset = Process.objects.filter()
+    serializer_class = ProcessBaseSerializer
+    filterset_fields = [
+        "client",
+    ]
 
 
 @api_view(["GET", "POST"])
@@ -103,3 +113,9 @@ def profile_image(request, client_id):
         return FileResponse(open(file_path, "rb"), content_type="image/*")
 
     return HttpResponse(status=404)
+
+
+class HonoraryViewSets(viewsets.ModelViewSet):
+    queryset = Honorary.objects.all().order_by("-date")
+    serializer_class = HonoraryBaseSerializer
+    filterset_class = HonoraryFilter

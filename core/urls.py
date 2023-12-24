@@ -9,6 +9,8 @@ router = SimpleRouter()
 router.register(r"client", views.ClientViewSets)
 router.register(r"evolution", views.EvolutionViewSets)
 router.register(r"observation", views.ObservationViewSets)
+router.register(r"process", views.ProcessViewSets)
+router.register(r"honorary", views.HonoraryViewSets)
 
 urlpatterns = [
     path("whoami", views.whoami, name="whoami"),

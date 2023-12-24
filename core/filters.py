@@ -1,7 +1,7 @@
 from django_filters import rest_framework as filters
 from django.db.models import Q
 
-from core.models import Client
+from core.models import Client, Honorary
 
 
 class ClientFilter(filters.FilterSet):
@@ -17,3 +17,11 @@ class ClientFilter(filters.FilterSet):
     class Meta:
         model = Client
         fields = ("search_term",)
+
+
+class HonoraryFilter(filters.FilterSet):
+    client = filters.NumberFilter(field_name="process__client_id")
+
+    class Meta:
+        model = Honorary
+        fields = ("process", "client")
