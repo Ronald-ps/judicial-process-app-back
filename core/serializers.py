@@ -46,3 +46,13 @@ class HonoraryBaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Honorary
         fields = "__all__"
+
+
+class DetailedProcessSerializer(serializers.ModelSerializer):
+    observations = ObservationSerializer(many=True, read_only=True)
+    evolutions = EvolutionSerializer(many=True, read_only=True)
+    client = ClientBaseSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Process
+        fields = ["id", "client", "code", "type", "start_date", "description", "observations", "evolutions"]

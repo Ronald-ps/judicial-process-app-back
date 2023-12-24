@@ -12,6 +12,7 @@ from django.core.files.storage import default_storage
 
 from core.serializers import (
     ClientBaseSerializer,
+    DetailedProcessSerializer,
     EvolutionSerializer,
     HonoraryBaseSerializer,
     LegalProcessSerializer,
@@ -69,7 +70,14 @@ class ProcessViewSets(viewsets.ModelViewSet):
     serializer_class = ProcessBaseSerializer
     filterset_fields = [
         "client",
+        "id",
     ]
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return DetailedProcessSerializer
+
+        return ProcessBaseSerializer
 
 
 @api_view(["GET", "POST"])
