@@ -115,8 +115,8 @@ class Evolution(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-class Honorary(models.Model):
     """Honorários de um processo"""
+class Honorary(models.Model):
 
     date = models.DateField()
     process = models.ForeignKey(Process, on_delete=models.CASCADE, related_name="honoraries")
