@@ -5,7 +5,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from core.filters import ClientFilter, HonoraryFilter
+from core.filters import ClientFilter, HonoraryFilter, ProcessFilter
 from core.models import Client, Evolution, Honorary, Observation, Process
 from rest_framework import status
 from django.core.files.storage import default_storage
@@ -68,10 +68,7 @@ class ObservationViewSets(viewsets.ModelViewSet):
 class ProcessViewSets(viewsets.ModelViewSet):
     queryset = Process.objects.filter()
     serializer_class = ProcessBaseSerializer
-    filterset_fields = [
-        "client",
-        "id",
-    ]
+    filterset_class = ProcessFilter
 
     def get_serializer_class(self):
         if self.action == "retrieve":

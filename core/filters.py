@@ -1,7 +1,7 @@
 from django_filters import rest_framework as filters
 from django.db.models import Q
 
-from core.models import Client, Honorary
+from core.models import Client, Honorary, Process
 
 
 class ClientFilter(filters.FilterSet):
@@ -25,3 +25,11 @@ class HonoraryFilter(filters.FilterSet):
     class Meta:
         model = Honorary
         fields = ("process", "client")
+
+
+class ProcessFilter(filters.FilterSet):
+    code = filters.CharFilter(field_name="code", lookup_expr="icontains")
+
+    class Meta:
+        model = Process
+        fields = ("code", "id", "client")
