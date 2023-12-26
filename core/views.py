@@ -37,6 +37,14 @@ class ClientViewSets(viewsets.ModelViewSet):
     serializer_class = ClientBaseSerializer
     filterset_class = ClientFilter
 
+    def destroy(self, request, *args, **kwargs):
+        client = self.get_object()
+
+        client.is_active = False
+        client.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

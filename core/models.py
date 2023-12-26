@@ -75,6 +75,7 @@ class Client(models.Model):
     city = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     assigned_attendant = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    is_active = models.BooleanField(default=True)
 
 
 class Process(models.Model):
