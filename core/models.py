@@ -56,7 +56,7 @@ class Client(models.Model):
         DIVORCIADO = "divorciado", "Divorciado"
         VIUVO = "viuvo", "Viúvo"
 
-    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    profile_image = models.ImageField(upload_to="profile_images/", null=True, blank=True)
     first_name = models.TextField()
     last_name = models.TextField()
     cpf = models.CharField(max_length=14)
@@ -74,6 +74,7 @@ class Client(models.Model):
     address = models.TextField()
     city = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    assigned_attendant = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 
 
 class Process(models.Model):
@@ -90,7 +91,7 @@ class Process(models.Model):
         PERICIA_EXTRAJUDICIAIS = "pericia extrajudiciais", "Pericia extrajudiciais"
         TERCEIRIZACAO_PARA_ESCRITORIOS = "terceirização para escritórios", "Terceirização para escritórios"
 
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="processes")
+    client = models.ForeignKey(Client, on_delete=models.PROTECT, related_name="processes")
     code = models.TextField()
     type = models.TextField(choices=TypeChoices.choices)
     start_date = models.DateField()
@@ -100,28 +101,28 @@ class Process(models.Model):
 class Observation(models.Model):
     """Observação de um processo"""
 
-    process = models.ForeignKey(Process, on_delete=models.CASCADE, related_name="observations")
+    process = models.ForeignKey(Process, on_delete=models.PROTECT, related_name="observations")
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
 
 
 class Evolution(models.Model):
     """Evolução de um processo"""
 
-    process = models.ForeignKey(Process, on_delete=models.CASCADE, related_name="evolutions")
+    process = models.ForeignKey(Process, on_delete=models.PROTECT, related_name="evolutions")
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
 
     """Honorários de um processo"""
-class Honorary(models.Model):
 
+
+class Honorary(models.Model):
     date = models.DateField()
-    process = models.ForeignKey(Process, on_delete=models.CASCADE, related_name="honoraries")
+    process = models.ForeignKey(Process, on_delete=models.PROTECT, related_name="honoraries")
     description = models.TextField()
     value = models.DecimalField(max_digits=10, decimal_places=2)
     paid_value = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
