@@ -74,7 +74,7 @@ class ObservationViewSets(viewsets.ModelViewSet):
 
 
 class ProcessViewSets(viewsets.ModelViewSet):
-    queryset = Process.objects.filter()
+    queryset = Process.objects.filter().order_by("-start_date")
     serializer_class = ProcessBaseSerializer
     filterset_class = ProcessFilter
 
