@@ -69,7 +69,8 @@ class EvolutionViewSets(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         file = request.FILES.get("file")
         data = request.data.copy()
-        data["file"] = file
+        if file:
+            data["file"] = file
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)

@@ -20,7 +20,7 @@ class ObservationSerializer(serializers.ModelSerializer):
 
 class EvolutionSerializer(serializers.ModelSerializer):
     process_code = serializers.CharField(source="process.code", read_only=True)
-    file = serializers.FileField()
+    file = serializers.FileField(required=False, default=None)
 
     class Meta:
         model = Evolution
