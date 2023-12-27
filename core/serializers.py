@@ -20,10 +20,11 @@ class ObservationSerializer(serializers.ModelSerializer):
 
 class EvolutionSerializer(serializers.ModelSerializer):
     process_code = serializers.CharField(source="process.code", read_only=True)
+    file = serializers.FileField()
 
     class Meta:
         model = Evolution
-        fields = ["id", "process_code", "process", "description", "created_at", "created_by"]
+        fields = ["id", "process_code", "process", "description", "created_at", "created_by", "file"]
         extra_kwargs = {"created_by": {"default": serializers.CurrentUserDefault()}}
 
 

@@ -115,11 +115,12 @@ class Evolution(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
-
-    """Honorários de um processo"""
+    file = models.FileField(upload_to="evolution_files/", null=True, blank=True)
 
 
 class Honorary(models.Model):
+    """Honorários de um processo"""
+
     date = models.DateField()
     process = models.ForeignKey(Process, on_delete=models.PROTECT, related_name="honoraries")
     description = models.TextField()
