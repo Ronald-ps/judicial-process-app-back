@@ -48,6 +48,7 @@ class HonoraryBaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Honorary
         fields = "__all__"
+        extra_kwargs = {"created_by": {"default": serializers.CurrentUserDefault()}}
 
 
 class DetailedProcessSerializer(serializers.ModelSerializer):
