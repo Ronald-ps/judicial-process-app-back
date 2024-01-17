@@ -27,4 +27,6 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 RUN pip install pip==23.0.1 && \
     poetry install -n --no-ansi --no-root
 
+RUN if [ ! -f error.log ]; then touch error.log; fi
+
 COPY . .

@@ -4,6 +4,7 @@ Backend genérico para a criação de projetos django com frontend e backend des
 
 ## Rodar projeto
 ```shell
+touch error.log
 pipx install poetry
 poetry install
 poetry shell
