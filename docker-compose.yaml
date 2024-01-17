@@ -23,6 +23,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+      - ./staticfiles:/app/staticfiles
     environment:
       # postgresql é a refência interna de host que o docker cria
       POSTGRES_HOST: 'postgresql'
