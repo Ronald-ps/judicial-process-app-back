@@ -1,0 +1,9 @@
+.env.example
+.eslintrc.cjs
+README.md
+todo.md
+.vscode
+node_modules
+dist
+.gitignore
+Dockerfile

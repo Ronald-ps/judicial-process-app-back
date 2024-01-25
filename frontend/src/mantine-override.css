@@ -1,0 +1,6 @@
+.mantine-Table-tbody .mantine-Table-tr:nth-child(2n + 1) {
+  background-color: #dcdcdc;
+}
+.mantine-Table-tbody .mantine-Table-tr:nth-child(2n) {
+  background-color: #ebebeb00;
+}

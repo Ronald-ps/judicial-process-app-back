@@ -1,0 +1,13 @@
+.clientFormSubmitButton {
+  background-color: #1c16428c;
+  @mixin hover {
+    background-color: #1c16429c;
+  }
+}
+.clientFormCancelButton {
+  background-color: #d3d3d3;
+
+  @mixin hover {
+    background-color: #D3D3D3;
+  }
+}
