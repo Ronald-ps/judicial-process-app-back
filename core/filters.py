@@ -9,9 +9,11 @@ class ClientFilter(filters.FilterSet):
 
     def filter_by_search_term(self, queryset, name, value):
         return queryset.filter(
-            Q(first_name__icontains=value)
-            | Q(last_name__icontains=value)
-            | Q(processes__code__icontains=value)
+            Q(
+                Q(first_name__icontains=value)
+                | Q(last_name__icontains=value)
+                | Q(processes__code__icontains=value)
+            )
         )
 
     class Meta:
