@@ -32,5 +32,26 @@ services:
       - postgresql
     command: "sh -c 'gunicorn project.wsgi:application --bind 0.0.0.0:8000'"
 
+  front:
+    image: front
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/dist:/frontapp/dist
+
+    command: "npm run build"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./frontend/dist:/usr/share/nginx/html
+    depends_on:
+      - front
+
 volumes:
   postgres_data:
