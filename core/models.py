@@ -32,6 +32,7 @@ class User(AbstractUser):
     """
     Usuário customizado com email como campo de login
     """
+    tenant_company = models.ForeignKey("TenantCompany", null=True, blank=True, on_delete=models.PROTECT)
 
     username = None
     email = models.EmailField(unique=True)
@@ -56,6 +57,7 @@ class Client(models.Model):
         DIVORCIADO = "divorciado", "Divorciado"
         VIUVO = "viuvo", "Viúvo"
 
+    tenant_company = models.ForeignKey("TenantCompany", null=True, blank=True, on_delete=models.PROTECT)
     profile_image = models.ImageField(upload_to="profile_images/", null=True, blank=True)
     first_name = models.TextField()
     last_name = models.TextField()
@@ -128,3 +130,11 @@ class Honorary(models.Model):
     paid_value = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
+
+
+class TenantCompany(models.Model):
+    """ Empresa que usa o sistema """
+
+    name = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
